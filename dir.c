@@ -31,7 +31,7 @@ void permissions(mode_t mode,char * buffer){
 
 int main(){
   struct stat fileStats;
-  stat("stat.c", &fileStats);
+  stat("dir.c", &fileStats);
   float size = (float) fileStats.st_size;
   float nsize = size;
   char * place = readable_form(size);
@@ -51,6 +51,16 @@ int main(){
   d= opendir("dir");
   struct dirent *entry;
   entry = readdir(d);
-
+  float total = 0;
+  while(entry){
+    stat(entry->d_name,&fileStats);
+    printf("file type: %d\t",entry->d_type);
+    printf("file size: %ld\t",fileStats.st_size);
+    printf("filename: %s\n",entry->d_name);
+    total += fileStats.st_size;
+    entry = readdir(d);
+  }
+  closedir(d);
+  printf("total file size: %f\n",total);
   return 0;
 }
