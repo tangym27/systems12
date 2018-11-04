@@ -8,10 +8,10 @@
 
 int main(int argc, char *argv[]){
   char* dir = malloc(50);
-  if (argc <= 1){
+  if (argc <= 1){ //if argc > 1, then there is an provided entry
       printf("Directory: ");
       fgets(dir, 50, stdin);
-      dir[strlen(dir)-1] = 0; // Set \n to NULL
+      dir[strlen(dir)-1] = 0; // fixes the ending
   } else {
       dir = argv[1];
   }
