@@ -24,9 +24,9 @@ int main(int argc, char *argv[]){
     printf("The directory you have entered does not exist!\n" );
     return 0;
   }
-
   struct stat *file = malloc(sizeof(struct stat));
   entry=readdir(d);
+  int filesize = 0;
   printf("List of Files: \n");
   while(entry){
     printf("---------------\n");
@@ -37,8 +37,16 @@ int main(int argc, char *argv[]){
     else if(entry->d_type==8){
       printf("File Type: Regular\n");
     }
+    char *filename = calloc(sizeof(char),100);
+    strcat(filename,dir);
+    strcat(filename,"/");
+    strcat(filename,entry->d_name);
+    stat(filename,file);
+    printf("File Size: %ld \n",file->st_size);
+    filesize += file->st_size;
     entry=readdir(d);
   }
+  printf("Total Size: %d \n",filesize);
   closedir(d);
 
   return 0;
